@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  app:
+  # app is the name of the service that will run the docker file
+    build:
+      context: .
+      # . means use the current directory, which in this case is the root directory we're running our command from
+      args:
+        - DEV=true
+    ports:
+      - '8000:8000'
+      # maps port 8000 on local machine to port 8000 inside docker container
+    volumes:
+      - ./app:/app
+      # way of mapping directories from local system to docker container
+      # we do this because we want the updates running in our local machine to reflect inside our docker contianer in real time
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    # command that is used to run the service
